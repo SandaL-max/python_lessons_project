@@ -117,3 +117,5 @@ Run the `main.py` file to perform the desired statistical analysis on selected W
 ### Conclusion
 
 This project provides a structured approach to analyzing Wikipedia articles, offering a deeper understanding of their linguistic characteristics. It encourages modularity, code readability, and efficient use of libraries for statistical computations.
+
+Project developed on Python 3.12.1
