@@ -1,6 +1,7 @@
 # pylint: disable=C0114
 # pylint: disable=C0115
 # pylint: disable=C0116
+import os.path
 import json
 
 import numpy as np
@@ -11,11 +12,23 @@ from page_content import PageContent
 
 class PageAnalytics:
     def __init__(self, page_content: PageContent):
+        self.url = page_content.url
         self.sentences = page_content.sentences
         self.words = page_content.words
-        self.analytics_data = dict()
+        self.analytics_data = None
 
     def make_analytics(self):
+        """Make analytics for:
+        1) Top 10 the most frequent words
+        2) Top 10 the most frequent words without stop words
+        3) Mean and median of words length
+        4) Top 10 the longest words
+        5) Mean and median of sentences length
+        6) The longest sentence
+        7) Count of sentences
+        9) Count of words
+        """
+        self.analytics_data = {"url": self.url}
         # Количество слов
         words_count = (
             self.words.groupby(self.words).count().sort_values(ascending=False)
@@ -23,6 +36,7 @@ class PageAnalytics:
         self.analytics_data["top10_the_most_frequent_words"] = words_count.head(
             10
         ).index.values.tolist()
+
         # Количество слов без предлогов и союзов
         stop_words = list(stopwords.words("english"))
         words_count_without_stop_words = (
@@ -66,10 +80,27 @@ class PageAnalytics:
             "Sentences length"
         ].median()
 
-        print(json.dumps(self.analytics_data, indent=4))
+        # Сколько слов и предложений
+        self.analytics_data["words_count"] = self.words.size
+        self.analytics_data["sentences_count"] = self.sentences.size
 
-    def save_to_json(self, filename: str):
-        pass
+    def save_to_json(self, filename: str = "output/analyses.json"):
+        """Stores analytics to json file
+
+        Args:
+            filename (str, optional): path json file where should'be stored analytics. Defaults to "output/analyses.json".
+        """
+        analysed = []
+        if os.path.isfile(filename):
+            with open(filename, "r", encoding="utf-8") as file:
+                analysed = json.load(file)
+        if self.analytics_data is None:
+            self.make_analytics()
+        analysed.append(self.analytics_data)
+        with open(filename, "w", encoding="utf-8") as file:
+            json.dump(analysed, file, indent=4)
 
     def __str__(self):
-        pass
+        if self.analytics_data is None:
+            self.make_analytics()
+        return json.dumps(self.analytics_data, indent=4)

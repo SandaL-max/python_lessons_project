@@ -12,6 +12,7 @@ from page_content import PageContent
 class Extractor:
     @staticmethod
     def extract_sentences(raw_page: RawPage, page_content: PageContent):
+        page_content.url = raw_page.url
         soup = BeautifulSoup(raw_page.data, "lxml")
         text = re.sub(
             r"\[.*?\]", "", "\n".join([x.get_text() for x in soup.find_all("p")])
@@ -22,6 +23,7 @@ class Extractor:
 
     @staticmethod
     def extract_words(raw_page: RawPage, page_content: PageContent):
+        page_content.url = raw_page.url
         soup = BeautifulSoup(raw_page.data, "lxml")
         text = (
             re.sub(

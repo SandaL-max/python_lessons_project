@@ -1,7 +1,16 @@
 class PageContent:
     def __init__(self):
+        self.__url = None
         self.__sentences = None
         self.__words = None
+
+    @property
+    def url(self):
+        return self.__url
+
+    @url.setter
+    def url(self, value):
+        self.__url = value
 
     @property
     def sentences(self):
