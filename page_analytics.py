@@ -18,15 +18,19 @@ class PageAnalytics:
         self.analytics_data = None
 
     def make_analytics(self):
-        """Make analytics for:
-        1) Top 10 the most frequent words
-        2) Top 10 the most frequent words without stop words
-        3) Mean and median of words length
-        4) Top 10 the longest words
-        5) Mean and median of sentences length
-        6) The longest sentence
-        7) Count of sentences
-        9) Count of words
+        """Generate analytics for the given Wikipedia article.
+
+        The analytics include the following:
+        1) Top 10 most frequent words.
+        2) Top 10 most frequent words without stop words.
+        3) Mean and median word lengths.
+        4) Top 10 longest words.
+        5) Mean and median sentence lengths.
+        6) The longest sentence.
+        7) Count of sentences.
+        8) Count of words.
+
+        Updates the 'analytics_data' attribute with the computed statistics.
         """
         self.analytics_data = {"url": self.url}
         # Количество слов

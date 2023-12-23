@@ -12,6 +12,16 @@ from page_content import PageContent
 class Extractor:
     @staticmethod
     def extract_sentences(raw_page: RawPage, page_content: PageContent):
+        """
+        Extract sentences from Wikipedia article HTML content and update PageContent.
+
+        Parameters:
+        - raw_page (RawPage): Wikipedia article representation.
+        - page_content (PageContent): Storage for extracted sentences.
+
+        Modifies the PageContent object by assigning the article URL from the RawPage,
+        extracting sentences using BeautifulSoup and NLTK, and storing the result in 'sentences'.
+        """
         page_content.url = raw_page.url
         soup = BeautifulSoup(raw_page.data, "lxml")
         text = re.sub(
@@ -23,6 +33,16 @@ class Extractor:
 
     @staticmethod
     def extract_words(raw_page: RawPage, page_content: PageContent):
+        """
+        Extract words from Wikipedia article HTML content and update PageContent.
+
+        Parameters:
+        - raw_page (RawPage): Wikipedia article representation.
+        - page_content (PageContent): Storage for extracted words.
+
+        Modifies the PageContent object by assigning the article URL from the RawPage,
+        extracting words using BeautifulSoup and NLTK, and storing the result in 'words'.
+        """
         page_content.url = raw_page.url
         soup = BeautifulSoup(raw_page.data, "lxml")
         text = (
